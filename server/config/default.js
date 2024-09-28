@@ -15,5 +15,6 @@ module.exports.HTTP_CODES = {
   };
 
   module.exports.CONSTANTS = {
-    SERVER_BASE_URL: "http://localhost:4000"
+    SERVER_BASE_URL: "http://localhost:4000",
+    DEFAULT_RESPONSE:{success: "Success"}
   };

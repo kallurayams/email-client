@@ -5,33 +5,52 @@ const ObjectId = Schema.ObjectId;
 
 const emailSchema = new Schema(
   {
-    emailAddress: {
-      type: String,
-      default: "",
+    emailId: {
+      type: String
+    },
+    emailCreatedDate: {
+      type: Date
+    },
+    emailModifiedDate: {
+      type: Date
+    },
+    emailReceivedDate: {
+      type: Date
+    },
+    emailSentDate: {
+      type: Date
+    },
+    subject: {
+      type: String
     },
     isRead: {
-      type: Boolean,
-      default: false,
+      type: Boolean
     },
-    isArchived: {
-      type: Boolean,
-      default: false,
+    isDraft: {
+      type: Boolean
     },
-    isSpam: {
-      type: Boolean,
-      default: false,
+    fromName: {
+      type: String
     },
-    type: {
-      type: String,
-      enum: ["draft", "sent", "inbox"],
-      default: "draft",
+    fromEmail: {
+      type: String
     },
+    userId: {
+      type: ObjectId,
+      ref: "User",
+    },
+    folderName: {
+      type: String
+    },
+    folderId: {
+      type: String
+    }
   },
   { timestamps: true }
 );
 
 //Indexes
-emailSchema.index({ emailAddress: 1 });
+emailSchema.index({ userId: 1, folderName: 1 });
 
 module.exports = {
   Email: mongoose.model("Email", emailSchema),

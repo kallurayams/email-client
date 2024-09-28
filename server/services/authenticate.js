@@ -6,6 +6,7 @@ const msal = require('@azure/msal-node');
 const { User } = require("../models/user");
 const auth = require("../utils/auth");
 const utils = require("../utils/utils");
+const syncService = require("./syncing");
 
 const exportable = {
     authUrl: async () => {
@@ -66,7 +67,10 @@ const exportable = {
                     },
                 };
                 await User.updateOne({_id: userExists._id}, updateObj);
-                newToken = await auth.generateToken({_id: userExists._id});
+                let tokenData = {};
+                tokenData._id = userExists._id;
+                tokenData.accessToken = response.accessToken;
+                newToken = await auth.generateToken(tokenData, response.expiresOn);
             } else {
                 const userResult = await User.create({
                     accessToken: response.accessToken,
@@ -79,11 +83,16 @@ const exportable = {
                         accessTokenExpiry: response.expiresOn,
                     }
                 });
-                newToken = await auth.generateToken({_id: userResult._id});
+                let tokenData = {};
+                tokenData._id = userResult._id;
+                tokenData.accessToken = response.accessToken;
+                newToken = await auth.generateToken(tokenData, response.expiresOn);
             }
             if (!newToken) {
                 return errorResponse(HTTP_CODES.AUTH_FAIL, RESPONSE_MSGS.AUTH_FAIL);
             }
+            // syncService.runInitialSync({accessToken: response.accessToken});
+            console.log("Access Token Is: ", newToken);
             return successResponse(HTTP_CODES.OK, RESPONSE_MSGS.OK, {token: newToken});
         } catch (error) {
             logger.error(error);

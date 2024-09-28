@@ -10,12 +10,14 @@ module.exports = {
                 let token = req.headers.authorization;
                 let user = await verifyToken(token);
                 if (!user) {
+                    logger.error(RESPONSE_MSGS.AUTH_FAIL);
                     sendErrorResponse(req, res, HTTP_CODES.AUTH_FAIL, RESPONSE_MSGS.AUTH_FAIL);
                     return;
                 }
                 req.user = user;
                 next();
             } else {
+                logger.error(RESPONSE_MSGS.AUTH_FAIL);
                 sendErrorResponse(req, res, HTTP_CODES.AUTH_FAIL, RESPONSE_MSGS.AUTH_FAIL);
                 return;
             }

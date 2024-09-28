@@ -9,4 +9,8 @@ router.get("/initial-sync", authenticate,(req, res) => {
     syncingController.getInitialSync(req, res);
 });
 
+router.post("/run-initial-sync", authenticate, (req, res) => {
+    syncingController.runInitialSync(req, res);
+});
+
 module.exports = router;

@@ -38,7 +38,22 @@ const userSchema = new Schema(
         accessTokenExpiry: { type: Date }
       },
       default: {}
-    }
+    },
+    lastSynced: {
+      type: Date
+    },
+    initialSyncStatus: {
+      type: String,
+      enum: ["inProgress", "completed"],
+      default: "inProgress"
+    },
+    folderDeltaLinks: {
+      type: Object,
+      default: {}
+    },
+    webhookSubscriptionId: {
+      type: String
+    },
   },
   { timestamps: true }
 );
