@@ -17,9 +17,4 @@ module.exports.RESPONSE_MSGS = {
   Bad_Response: "Invalid or incomplete response data",
 };
 
-module.exports.CONSTANTS = {
-  SERVER_BASE_URL: "http://localhost:4000",
-  DEFAULT_RESPONSE: { success: "Success" },
-};
-
 module.exports.ALLOWED_PROVIDERS = ["outlook"];

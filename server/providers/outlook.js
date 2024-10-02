@@ -332,8 +332,7 @@ function createOutlookProvider() {
 
       const subscription = {
         changeType: "created,updated,deleted",
-        notificationUrl:
-          "https://fcb3-2403-a080-c04-986d-1549-e456-e58d-1288.ngrok-free.app/api/v1/outlook/webhook",
+        notificationUrl: process.env.WEBHOOK_URL,
         resource:
           "/me/messages?$select=id,createdDateTime,lastModifiedDateTime,receivedDateTime,sentDateTime,isRead,isDraft,from,subject,parentFolderId,body",
         expirationDateTime: subscriptionExpiryDate.toISOString(),

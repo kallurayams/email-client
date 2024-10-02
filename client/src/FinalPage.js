@@ -18,7 +18,7 @@ function FinalPage() {
 
   useEffect(() => {
     console.log("Attempting to connect to Socket.io server...");
-    const newSocket = io("http://localhost:4000", {
+    const newSocket = io(process.env.API_BASE_URL, {
       // Ensure this URL is correct
       query: { userId: sessionStorage.getItem("localUserId") }, // Replace with actual user ID
     });

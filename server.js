@@ -19,7 +19,7 @@ const server = http.createServer(app);
 // Initialize socket with CORS options
 initializeSocket(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: process.env.CLIENT_BASE_URL,
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
