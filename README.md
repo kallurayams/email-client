@@ -1,63 +1,74 @@
-# Email Client Setup Guide
+# Project Name
+
+Brief description of your project.
 
 ## Prerequisites
 
-- Node.js v20.10.0 installed
-- npm or yarn installed
-- Git installed
+- Node.js (v20.10.0)
+- npm
+- Docker (for deployment)
 
-## Frontend Client Setup
+## Installation and Setup
 
-1. **Clone the repository:**
+### Frontend Setup
 
-   ```sh
-   git clone https://github.com/yourusername/email-client.git
-   cd email-client/client
+1. Navigate to the client folder:
+
+   ```
+   cd client
    ```
 
-2. **Install dependencies:**
+2. Install dependencies:
 
-   ```sh
+   ```
    npm install
-   # or
-   yarn install
    ```
 
-3. **Start the frontend server:**
+3. Configure the proper URLs in the config file.
 
-   ```sh
+4. Start the frontend server:
+   ```
    npm start
-   # or
-   yarn start
    ```
 
-4. **Open the frontend:**
-   Open your browser and navigate to `http://localhost:3000`.
+### Backend Setup
 
-## Backend Server Setup
+1. From the root folder, install dependencies:
 
-1. **Navigate to the backend directory:**
-
-   ```sh
-   cd ../server
    ```
-
-2. **Install dependencies:**
-
-   ```sh
    npm install
-   # or
-   yarn install
    ```
 
-3. **Start the backend server:**
-   ```sh
+2. Configure the `.env` file with proper URLs and Microsoft Azure App credentials.
+
+3. Create private and secret keys:
+
+   - Rename them as `privateKey.pem` and `certificate.pem`
+   - Move them to `server/cert/outlook/` folder
+   - These are used to encrypt and decrypt info from webhook
+
+4. Start the backend server:
+   ```
    npm start
-   # or
-   yarn start
    ```
 
-## Summary
+## Docker Deployment
 
-- Frontend URL: `http://localhost:3000`
-- Backend URL: `http://localhost:4000/api/v1/`
+1. Update certificates, environment file, and all URLs.
+
+2. Run the following command:
+   ```
+   docker-compose up --build -d
+   ```
+   or
+   ```
+   docker compose up --build -d
+   ```
+
+## Accessing the Application
+
+After starting the application, you can access it at:
+
+```
+http://localhost:3000/
+```
