@@ -21,7 +21,7 @@ const CCA_SCOPES = ["user.read", "mail.read"];
 const PROVIDER = "outlook";
 
 function createOutlookProvider() {
-  const authRedirectionUrl = `${process.env.API_BASE_URL}${process.env.API_BASE_PATH}/${PROVIDER}${process.env.AUTH_CALLBACK_API_ENDPOINT}`;
+  const authRedirectionUrl = `${process.env.AUTH_CALLBACK_API_BASE_PATH}${process.env.API_BASE_PATH}/${PROVIDER}${process.env.AUTH_CALLBACK_API_ENDPOINT}`;
 
   const msalOptions = {
     auth: {
