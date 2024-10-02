@@ -1,13 +1,13 @@
 const router = require("express").Router();
-const config = require("../config/config");
 
-const authRouter = require("./authenticate");
-const syncingRouter = require("./syncing");
-const webhookRouter = require("./webhook");
+const authRouter = require("./auth");
+const syncingRouter = require("./sync");
+const outlookRouter = require("./outlook");
+const emailRouter = require("./email");
 
-router.use(config.apiPath + "/authenticate", authRouter);
-router.use(config.apiPath + "/sync", syncingRouter);
-router.use(config.apiPath + "/webhook", webhookRouter);
-
+router.use(process.env.API_BASE_PATH + "/auth", authRouter);
+router.use(process.env.API_BASE_PATH + "/sync", syncingRouter);
+router.use(process.env.API_BASE_PATH + "/outlook", outlookRouter);
+router.use(process.env.API_BASE_PATH + "/email", emailRouter);
 
 module.exports = router;

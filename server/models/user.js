@@ -2,64 +2,41 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const ObjectId = Schema.ObjectId;
+const { ALLOWED_PROVIDERS } = require("../config/default");
 
 const userSchema = new Schema(
   {
-    emailAddress: {
+    email: {
       type: String,
-      default: "",
+      required: true,
     },
-    fullName: {
+    name: {
       type: String,
-      default: "",
+      required: true,
     },
-    localId: {
+    localUserId: {
       type: String,
-      default: "",
-    },
-    accessToken: {
-      type: String,
-      default: "",
-    },
-    task: {
-      type: [{
-        taskName: {
-          type: String,
-          enum: ["initial-sync"],
-        },
-        total: Number,
-        completed: Number
-      }],
-      default: [],
-    },
-    outlookParams: {
-      type: {
-        accessToken: { type: String },
-        accessTokenExpiry: { type: Date }
-      },
-      default: {}
-    },
-    lastSynced: {
-      type: Date
-    },
-    initialSyncStatus: {
-      type: String,
-      enum: ["inProgress", "completed"],
-      default: "inProgress"
+      required: true,
     },
     folderDeltaLinks: {
       type: Object,
-      default: {}
+      default: {},
     },
     webhookSubscriptionId: {
-      type: String
+      type: String,
+    },
+    provider: {
+      type: String,
+      enum: ALLOWED_PROVIDERS,
+      required: true,
     },
   },
   { timestamps: true }
 );
 
 //Indexes
-userSchema.index({ emailAddress: 1 });
+userSchema.index({ email: 1, provider: 1 }, { unique: true });
+userSchema.index({ localUserId: 1 }, { unique: true });
 
 module.exports = {
   User: mongoose.model("User", userSchema),

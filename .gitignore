@@ -4,6 +4,10 @@ package-lock.json
 client/node_modules/
 client/package-lock.json
 client/build/
+server/cert
 
 # Environment variables
 .env
+.env.outlook
+.vscode/
+eslint*

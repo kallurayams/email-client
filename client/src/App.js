@@ -1,21 +1,18 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import OutlookConnectPage from './components/OutlookConnectPage';
-import SyncStatus from './components/SyncStatusPage';
-import AuthHandler from './components/AuthHandler';
-
-// Placeholder for your data page component
-const DataPage = () => <div>Data Page</div>;
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import ConnectPage from "./ConnectPage";
+import OAuthRedirect from "./OAuthRedirect";
+import SyncInProgress from "./SyncInProgress";
+import FinalPage from "./FinalPage";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Navigate to="/connect" />} />
-        <Route path="/connect" element={<OutlookConnectPage />} />
-        <Route path="/data" element={<DataPage />} />
-        <Route path="/sync-status" element={<AuthHandler />} />
-        <Route path="/sync" element={<SyncStatus />} />
+        <Route path="/" element={<ConnectPage />} />
+        <Route path="/oauth-redirect" element={<OAuthRedirect />} />
+        <Route path="/sync-in-progress" element={<SyncInProgress />} />
+        <Route path="/final-page" element={<FinalPage />} />
       </Routes>
     </Router>
   );

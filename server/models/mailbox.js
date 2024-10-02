@@ -1,22 +1,16 @@
-//User model
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const ObjectId = Schema.ObjectId;
+const { ALLOWED_MAILBOXES } = require("../config/default");
 
 const mailboxSchema = new Schema(
   {
-    folderName: {
+    name: {
       type: String,
-      enum: [
-        "Inbox",
-        "Junk Email",
-        "Drafts",
-        "Sent Items",
-        "Archive"
-      ]
+      required: true,
     },
-    folderId: {
-      type: String
+    outlookFolderId: {
+      type: String,
     },
   },
   { timestamps: true }

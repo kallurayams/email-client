@@ -1,55 +1,55 @@
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const app = express();
-const { logger } = require("./server/utils/logger");
+require("dotenv").config();
+
+const express = require("express");
+const cors = require("cors");
+const helmet = require("helmet");
+const http = require("http");
 const path = require("path");
 
-//Load env variables
-const config = require('./server/config/config');
+const { logger } = require("./server/utils/logger");
+const {
+  initializeSocket,
+  startEmailProcessing,
+} = require("./server/config/socket");
+const mongoInitiate = require("./server/config/mongoose");
+const routes = require("./server/routes/routes");
+const app = express();
+const server = http.createServer(app);
 
-//Connect to Mongodb Database
-const mongoInitiate = require('./server/config/mongoose');
+// Initialize socket with CORS options
+initializeSocket(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  },
+});
+
+// Connect to MongoDB
 mongoInitiate();
 
-app.use(cors())
-    .use(helmet())
-    .use(express.json());
+// Middleware
+app.use(cors());
+app.use(helmet());
+app.use(express.json());
 
-//Log each incoming request
-app.all("*/api*", function (req, res, next) {
-    logger.info(`${req.method} ${req.url}`);
-    next();
+// Logging middleware
+app.all("*/api*", (req, res, next) => {
+  logger.info(`${req.method} ${req.url}`);
+  next();
 });
 
-//Handle uncaught exceptions
-process.on('uncaughtException', (err) => {
-    logger.error('Uncaught Exception: ', err);
-    process.exit(1);
+// Routes
+app.use(routes);
+
+// Test route for email processing
+app.get("/test-email-processing", (req, res) => {
+  const userId = "d73fc3ac-f160-49c8-b4d7-41edba2d033c";
+  startEmailProcessing(userId);
+  res.send("Email processing started event emitted");
 });
 
-//Handle unhandled rejection
-process.on('unhandledRejection', (reason, promise) => {
-    logger.error('Unhandled Rejection at:', promise, 'reason:', reason);
-    process.exit(1);
-});
-
-//Routes
-const router = require('./server/routes/routes');
-app.use(router);
-
-//Middlewares
-// app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
-
-//Serve static files from public directory
-// app.use(express.static(path.join(__dirname, '../client/public')));
-
-// //Serve frontend for any other routes
-// app.get('*', (req, res) => {
-//     res.sendFile(path.join(__dirname, '../client/public/index.html'));
-// });
-
-//Start server
-app.listen(config.port, () => {
-    logger.info(`Server is running!`);
-});
+// Start server
+const PORT = process.env.PORT || 4000;
+server.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

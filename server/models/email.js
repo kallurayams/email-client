@@ -1,50 +1,61 @@
 //User model
 const mongoose = require("mongoose");
+const { ALLOWED_PROVIDERS } = require("../config/default");
 const { Schema } = mongoose;
 const ObjectId = Schema.ObjectId;
 
 const emailSchema = new Schema(
   {
-    emailId: {
-      type: String
+    emailMessageId: {
+      type: String,
+      required: true,
     },
     emailCreatedDate: {
-      type: Date
+      type: Date,
     },
     emailModifiedDate: {
-      type: Date
+      type: Date,
     },
     emailReceivedDate: {
-      type: Date
+      type: Date,
     },
     emailSentDate: {
-      type: Date
+      type: Date,
     },
     subject: {
-      type: String
+      type: String,
     },
     isRead: {
-      type: Boolean
+      type: Boolean,
+      default: false,
     },
     isDraft: {
-      type: Boolean
+      type: Boolean,
+      default: false,
     },
     fromName: {
-      type: String
+      type: String,
     },
     fromEmail: {
-      type: String
-    },
-    userId: {
-      type: ObjectId,
-      ref: "User",
-    },
-    folderName: {
-      type: String
+      type: String,
     },
     folderId: {
-      type: String
-    }
+      type: ObjectId,
+      ref: "Mailbox",
+    },
+    provider: {
+      type: String,
+      enum: ALLOWED_PROVIDERS,
+      required: true,
+    },
+    user: {
+      type: String,
+      required: true,
+    },
+    body: {
+      type: String,
+      default: "",
+    },
   },
   { timestamps: true }
 );

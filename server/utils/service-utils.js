@@ -1,19 +1,11 @@
+const successResponse = (code, message, data) => ({
+  responseObj: { code, message, data },
+});
+const errorResponse = (code, message) => ({
+  errorObj: { code, message },
+});
+
 module.exports = {
-    successResponse: (code, message, data) => {
-        return {
-            responseObj: {
-                code: code,
-                message: message,
-                data: data,
-            },
-        };
-    },
-    errorResponse: (code, message) => {
-        return {
-            errorObj: {
-                code: code,
-                message: message
-            },
-        }
-    },
-}
+  successResponse,
+  errorResponse,
+};
