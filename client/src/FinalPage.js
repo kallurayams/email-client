@@ -18,10 +18,13 @@ function FinalPage() {
 
   useEffect(() => {
     console.log("Attempting to connect to Socket.io server...");
-    const newSocket = io(process.env.API_BASE_URL, {
-      // Ensure this URL is correct
-      query: { userId: sessionStorage.getItem("localUserId") }, // Replace with actual user ID
-    });
+    const newSocket = io(
+      "http://ec2-52-59-239-96.eu-central-1.compute.amazonaws.com:4000",
+      {
+        // Ensure this URL is correct
+        query: { userId: sessionStorage.getItem("localUserId") }, // Replace with actual user ID
+      }
+    );
     setSocket(newSocket);
 
     newSocket.on("connect", () => {
