@@ -333,8 +333,7 @@ function createOutlookProvider() {
       const subscription = {
         changeType: "created,updated,deleted",
         notificationUrl: process.env.WEBHOOK_URL,
-        resource:
-          "/me/messages?$select=id,createdDateTime,lastModifiedDateTime,receivedDateTime,sentDateTime,isRead,isDraft,from,subject,parentFolderId,body",
+        resource: "/me/messages",
         expirationDateTime: subscriptionExpiryDate.toISOString(),
         clientState: outlookConfig.secrets.webhookClientSecret,
         includeResourceData: true,
